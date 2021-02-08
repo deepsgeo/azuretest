@@ -12,20 +12,10 @@ provider "azurerm" {
   features {}
  
 }
-variable "location" {
-    type = string
-    description = "Location of the resource group"
-    default = "eastus"
-}    
-variable "vnet_address_space" { 
-    type = list
-    description = "Address space for Virtual Network"
-    default = ["172.16.0.0/16"]
-}    
 
 #create resource group
 resource "azurerm_resource_group" "rg" {
-    name     = "testrg"
+    name     = var.resource_gp
     location = var.location
 }
 
@@ -38,9 +28,12 @@ resource "azurerm_virtual_network" "vnet" {
 }
 
 # Create subnet
-resource "azurerm_subnet" "subnet" {
+resource "azurerm_subnet" "subnet1" {
   name                 = "public"
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefix       = "172.16.1.0/24"
+}
+output "vnet_name" {
+  value = azurerm_virtual_network.vnet.name
 }

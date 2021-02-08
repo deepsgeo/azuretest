@@ -1,3 +1,8 @@
+variable "resource_gp" {
+    type = string
+    default = "testrg"
+    description = "Resource group name"
+}
 variable "location" {
     type = string
     description = "Location of the resource group"
